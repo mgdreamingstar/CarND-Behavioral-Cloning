@@ -1,3 +1,7 @@
+'''
+flip all images including left camera and right's images.
+'''
+
 import csv
 import cv2
 import numpy as np
