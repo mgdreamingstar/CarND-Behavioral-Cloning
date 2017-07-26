@@ -87,7 +87,7 @@ def generator(samples, batch_size=32):
 
 # model
 from keras.models import Sequential
-from keras.layers import Flatten, Dense, Lambda, Cropping2D
+from keras.layers import Flatten, Dense, Lambda, Cropping2D, Dropout
 from keras.layers.convolutional import Convolution2D
 from keras.layers.pooling import MaxPooling2D
 
@@ -126,8 +126,11 @@ model.add(Convolution2D(64,3,3,activation='relu'))
 model.add(Convolution2D(64,3,3,activation='relu'))
 model.add(Flatten())
 model.add(Dense(100))
+#model.add(Dropout(0.5))
 model.add(Dense(50))
+#model.add(Dropout(0.5))
 model.add(Dense(10))
+#model.add(Dropout(0.5))
 model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam')
 
@@ -139,7 +142,7 @@ history_object = model.fit_generator(train_generator, samples_per_epoch =
     len(train_samples), validation_data =
     validation_generator,
     nb_val_samples = len(validation_samples),
-    nb_epoch=3, verbose=1)
+    nb_epoch=10, verbose=1)
 
 ### print the keys contained in the history object
 print(history_object.history.keys())
@@ -155,5 +158,5 @@ plt.show()
 
 
 os.chdir('..')
-model.save('model_8_Nvidia.h5')
+model.save('model_8_1.h5')
 exit()
