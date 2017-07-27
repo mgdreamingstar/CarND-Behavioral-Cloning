@@ -12,13 +12,9 @@ The goals / steps of this project are the following:
 
 [//]: # "Image References"
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image1]: cropped_image.jpg "Cropped Image"
+[image2]: origin_image.jpg "Original Image"
+[image3]: flipped_image.jpg "Flipped Image"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.
@@ -54,7 +50,9 @@ The model includes RELU layers to introduce nonlinearity (code line 122-126), an
 
 #### 2. Attempts to reduce overfitting in the model
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 12-37). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 12-37). However, the Dropout layers are commented out for these layers actually make the model worse while it isn't overfitting. For relatively small epochs (under 20 epochs), it may not have overfitting problem, so I choose not to add the Dropout layers.
+
+ The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 #### 3. Model parameter tuning
 
@@ -92,13 +90,39 @@ My model consists of a convolution neural network with 5x5 or 3x3 filter sizes a
 
 The model includes RELU layers to introduce nonlinearity (code line 122-126), and the data is normalized in the model using a Keras lambda layer (code line 120).
 
+| Layers | Kernel Size | Depth |
+| ------- | ------ | ---- |
+| Normalization    |   -  | - |
+| Cropping2D | - | -  |
+| Convolution2D | 5x5 | 24 |
+| RELU | - | - |
+| Convolution2D | 5x5 | 36 |
+| RELU | - | - |
+| Convolution2D | 5x5 | 48 |
+| RELU | - | - |
+| Convolution2D | 3x3 | 64 |
+| RELU | - | - |
+| Convolution2D | 3x3 | 64 |
+| RELU | - | - |
+| Flatten | - | - |
+| Dense | - | 100 |
+| Dense | - | 50 |
+| Dense | - | 1 |
+
 #### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I just recorded several drives on the locations where the car can't autonomously pass on road.
 
-To augment the data sat, I also flipped images and angles thinking that this would make the car not to sheer to left too hard and pass through the roads with sharp curve.
+To augment the data sat, I also flipped images and angles thinking that this would make the car not to sheer to left too hard and pass through the roads with sharp curve. Here is a flipped image and the original one:
 
-After the collection process, I had 43229 number of data points. I then preprocessed this data by cropping the top and bottom part which will distract the model.
+![all text][image3]
+
+![all text][image2]
+
+
+After the collection process, I had 43229 number of data points. I then preprocessed this data by cropping the top and bottom part which will distract the model. Here is a cropped image:
+
+![all text][image1]
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set.
 
